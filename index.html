@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" ng-app>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chain Reaction</title>
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom css -->
+    <link href="css/game.css" rel="stylesheet">
+</head>
+
+<body ng-controller="gameController" ng-init="intializeGame()">
+    <div class="container main-container">
+        <div class="row">
+            <h1>{{appName}}
+                <small>{{secondaryText}}</small>
+            </h1>
+        </div>
+        <div class="row full-height">
+            <div class="panel panel-default full-height">
+                <div class="panel-body full-height">
+                    <table class="game-table" ng-style="getBoardBorderStyle(players, currentPlayer)">
+                        <tbody>
+                            <tr ng-repeat="row in matrix track by $index">
+                                <td ng-repeat="col in row track by $index" class="text-center" ng-style="getBoardBorderStyle(players, currentPlayer)" ng-click="cellClicked($parent.$index, $index)">{{col}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal to select no of players -->
+    <div class="modal fade" id="noOfPlayersModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Select no of players</h3>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group" ng-repeat="player in players track by $index">
+                            <label class="col-sm-3 control-label">Player {{$index + 1}}</label>
+                            <div class="col-sm-7">
+                                <input type="color" class="form-control" ng-model="players[$index]">
+                            </div>
+                            <div class="col-sm-2 center-block">
+                                <button class="btn btn-danger" ng-click="removePlayer($index)">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-xs-4 text-center">
+                            <h4 class="inline">{{players.length}} Players</h4>
+                        </div>
+                        <div class="col-xs-4 text-center">
+                            <span class="glyphicon glyphicon-minus move-cursor text-danger" ng-click="decreaseRows()"></span>
+                            <h4 class="inline">{{matrix.length}}&nbsp;Rows&nbsp;</h4>
+                            <span class="glyphicon glyphicon-plus move-cursor text-success" ng-click="increaseRows()"></span>
+                        </div>
+                        <div class="col-xs-4 text-center">
+                            <span class="glyphicon glyphicon-minus move-cursor text-danger" ng-click="decreaseCols()"></span>
+                            <h4 class="inline">{{matrix[0].length}}&nbsp;Columns&nbsp;</h4>
+                            <span class="glyphicon glyphicon-plus move-cursor text-success" ng-click="increaseCols()"></span>
+                        </div>
+                    </div>
+                    <br/>
+                    <button type="button" class="btn btn-success" ng-click="addPlayer()">Add Player</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <!-- Angular -->
+    <script src="js/angular.min.js"></script>
+    <!-- Controller -->
+    <script src="js/gameController.js"></script>
+    <!-- Bootstrap -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
