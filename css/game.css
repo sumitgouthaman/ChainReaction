@@ -4,6 +4,11 @@ body {
     width: 100%;
     padding: 0;
     margin: 0;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .inline {
     display: inline;
@@ -69,10 +74,10 @@ body {
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-timing-function: linear;
 }
-.shake-slow{
+.shake-slow {
     -webkit-animation-duration: 1.13s;
 }
-.shake-slower{
+.shake-slower {
     -webkit-animation-duration: 1.27s;
 }
 [ng\:cloak],

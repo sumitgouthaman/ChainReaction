@@ -6,9 +6,11 @@ chainreaction.controller('gameController', ['$scope',
         $scope.secondaryText = "By Sumit Gouthaman"
 
         //Intialize board for the game
-        $scope.matrix = new Array(8);
-        for (var i = 0; i < $scope.matrix.length; i++) {
-            $scope.matrix[i] = new Array(12);
+        $scope.rows = 8;
+        $scope.cols = 12;
+        $scope.matrix = new Array($scope.rows);
+        for (var i = 0; i < $scope.rows; i++) {
+            $scope.matrix[i] = new Array($scope.cols);
         }
 
         //Array to hold colors for each player
@@ -20,24 +22,33 @@ chainreaction.controller('gameController', ['$scope',
         $scope.currentPlayer = 0;
 
         /*
-    Gameplay related functions
-    */
+        Gameplay related functions
+        */
         $scope.cellClicked = function (r, c) {
             //alert("Clicked: " + r + " - " + c);
             $scope.matrix[r][c].player = $scope.currentPlayer;
-            $scope.matrix[r][c].count++;
+            $scope.matrix[r][c].count = ($scope.matrix[r][c].count + 1) % (maxInCell(r, c) + 1);
             changePlayer();
         }
         var changePlayer = function () {
             $scope.currentPlayer = ($scope.currentPlayer + 1) % $scope.players.length;
         }
+        var maxInCell = function (r, c) {
+            if ((r == 0 && (c == 0 || c == $scope.cols - 1)) || (r == $scope.rows - 1 && (c == 0 || c == $scope.cols - 1))) {
+                return 1;
+            }
+            if (r == 0 || r == $scope.rows - 1 || c == 0 || c == $scope.cols - 1) {
+                return 2;
+            }
+            return 3;
+        }
 
         /*
-    Called at the beginning to set up no of players
-    */
+        Called at the beginning to set up no of players
+        */
         $scope.resetGame = function () {
-            for (var i = 0; i < $scope.matrix.length; i++) {
-                for (var j = 0; j < $scope.matrix[i].length; j++) {
+            for (var i = 0; i < $scope.rows; i++) {
+                for (var j = 0; j < $scope.cols; j++) {
                     $scope.matrix[i][j] = {
                         "player": null,
                         "count": 0
@@ -51,8 +62,8 @@ chainreaction.controller('gameController', ['$scope',
         }
 
         /*
-    Function related to players
-    */
+        Function related to players
+        */
         $scope.addPlayer = function () {
             var newColor = getRandomColor();
             $scope.players.push(newColor);
@@ -75,46 +86,59 @@ chainreaction.controller('gameController', ['$scope',
         }
 
         /*
-    Code related to modifying number of rows and columns in the game
-    */
+        Code related to modifying number of rows and columns in the game
+        */
+        $scope.getNewCell = function () {
+            return {
+                "player": null,
+                "count": 0
+            };
+        }
         $scope.decreaseRows = function () {
             if ($scope.matrix.length > 3) {
                 $scope.matrix.pop();
+                $scope.rows--;
             }
         }
         $scope.increaseRows = function () {
             $scope.matrix.push(new Array($scope.matrix[0].length));
-            var lastIndex = $scope.matrix.length - 1;
-            for (var i = 0; i < $scope.matrix[0].length; i++) {
-                $scope.matrix[lastIndex][i] = 0;
+            $scope.rows++;
+            var lastIndex = $scope.rows - 1;
+            for (var i = 0; i < $scope.cols; i++) {
+                $scope.matrix[lastIndex][i] = $scope.getNewCell();
             }
         }
         $scope.decreaseCols = function () {
+            if ($scope.cols <= 3) {
+                return;
+            }
             for (var i = 0; i < $scope.matrix.length; i++) {
                 $scope.matrix[i].pop();
             }
+            $scope.cols--;
         }
         $scope.increaseCols = function () {
-            for (var i = 0; i < $scope.matrix.length; i++) {
-                $scope.matrix[i].push(0);
+            for (var i = 0; i < $scope.rows; i++) {
+                $scope.matrix[i].push($scope.getNewCell());
             }
+            $scope.cols++;
         }
         $scope.minimumRows = function () {
-            if ($scope.matrix.length <= 3) {
+            if ($scope.rows <= 3) {
                 return true;
             }
             return false;
         }
         $scope.minimumCols = function () {
-            if ($scope.matrix[0].length <= 3) {
+            if ($scope.cols <= 3) {
                 return true;
             }
             return false;
         }
 
         /*
-    Functions realted to style of cell on the board
-    */
+        Functions realted to style of cell on the board
+        */
         $scope.getBgColorCell = function (r, c) {
             var playerID = $scope.matrix[r][c].player;
             if (playerID == null) {
@@ -145,8 +169,8 @@ chainreaction.controller('gameController', ['$scope',
         }
 
         /*
-    Other functions
-    */
+        Other functions
+        */
         $scope.range = function (num) {
             return new Array(num);
         }
