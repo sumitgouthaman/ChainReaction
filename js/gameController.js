@@ -26,6 +26,11 @@ chainreaction.controller('gameController', ['$scope', '$timeout',
         */
         $scope.toExpode = new Array();
         $scope.cellClicked = function (r, c) {
+            if ($scope.matrix[r][c].player != null) {
+                if ($scope.matrix[r][c].player != $scope.currentPlayer) {
+                    return;
+                }
+            }
             $scope.cellAttack(r, c, $scope.currentPlayer);
             $timeout($scope.performExplosions, 100);
         }
