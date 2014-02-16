@@ -1,0 +1,11 @@
+{
+  "name": "Chain Reaction",
+  "description": "An attempt to replicate game of same name on Play Store for learning puposes.",
+  "version": "1.0",
+  "app": {
+    "background": {
+      "scripts": ["chrome/background.js"]
+    }
+  },
+  "icons": { "16": "images/favicon-16.png", "128": "images/favicon.png" }
+}

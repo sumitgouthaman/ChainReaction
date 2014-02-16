@@ -61,19 +61,18 @@
                 <div class="modal-body">
                     <form class="form-horizontal" role="form">
                         <div class="form-group" ng-repeat="player in players track by $index">
-                            <label class="col-sm-3 control-label">Player {{$index + 1}}</label>
-                            <div class="col-sm-7">
+                            <label class="col-xs-3 control-label">Player {{$index + 1}}</label>
+                            <div class="col-xs-7">
                                 <input type="color" class="form-control" ng-model="players[$index]">
                             </div>
-                            <div class="col-sm-2 center-block">
+                            <div class="col-xs-2 center-block">
                                 <button class="btn btn-danger" ng-click="removePlayer($index)" ng-hide="minimumPlayers()">
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </button>
                             </div>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
+                    <br/>
                     <div class="row">
                         <div class="col-xs-4 text-center">
                             <h4 class="inline">{{players.length}} Players</h4>
@@ -89,7 +88,11 @@
                             <span class="glyphicon glyphicon-plus move-cursor text-success" ng-click="increaseCols()"></span>
                         </div>
                     </div>
-                    <br/>
+                </div>
+                <div class="modal-footer">
+                    <small class="pull-left">By
+                        <a href="http://sumitgouthaman.com" target="_blank">Sumit Gouthaman</a>
+                    </small>
                     <button type="button" class="btn btn-success" ng-click="addPlayer()">Add Player</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
                 </div>
