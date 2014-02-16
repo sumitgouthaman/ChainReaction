@@ -1,5 +1,6 @@
 function gameController($scope) {
     $scope.appName = "Chain Reaction";
+    $scope.betaVersion = true;
     $scope.secondaryText = "By Sumit Gouthaman"
 
     //Intialize board for the game
@@ -10,7 +11,8 @@ function gameController($scope) {
 
     //Array to hold colors for each player
     $scope.players = new Array();
-    $scope.players.push("#FF0000");
+    $scope.players.push(getRandomColor());
+    $scope.players.push(getRandomColor());
 
     //Holds color of player who will play the current turn
     $scope.currentPlayer = 0;
@@ -19,32 +21,38 @@ function gameController($scope) {
     Gameplay related functions
     */
     $scope.cellClicked = function (r, c) {
-        alert("Clicked: " + r + " - " + c);
+        //alert("Clicked: " + r + " - " + c);
+        $scope.matrix[r][c]++;
+        changePlayer();
+    }
+    var changePlayer = function () {
+        $scope.currentPlayer = ($scope.currentPlayer + 1) % $scope.players.length;
     }
 
     /*
     Called at the beginning to set up no of players
     */
-    $scope.intializeGame = function () {
-        if ($scope.players.length < 2) {
-            $('#noOfPlayersModal').modal({});
-        }
+    $scope.resetGame = function(){
         for (var i = 0; i < $scope.matrix.length; i++) {
             for (var j = 0; j < $scope.matrix[i].length; j++) {
                 $scope.matrix[i][j] = 0;
             }
         }
     }
+    $scope.initializeGame = function () {
+        $('#noOfPlayersModal').modal({});
+        $scope.resetGame();
+    }
 
     /*
     Function related to players
     */
     $scope.addPlayer = function () {
-        var newColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+        var newColor = getRandomColor();
         $scope.players.push(newColor);
     }
     $scope.removePlayer = function (index) {
-        if ($scope.players.length > 1) {
+        if ($scope.players.length > 2) {
             $scope.players.splice(index, 1);
         }
     }

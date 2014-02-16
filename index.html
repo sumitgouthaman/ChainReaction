@@ -12,12 +12,24 @@
     <link href="css/game.css" rel="stylesheet">
 </head>
 
-<body ng-controller="gameController" ng-init="intializeGame()">
+<body ng-controller="gameController" ng-init="initializeGame()">
     <div class="container main-container">
         <div class="row">
-            <h1>{{appName}}
-                <small>{{secondaryText}}</small>
-            </h1>
+            <div class="col-sm-7">
+                <h1>{{appName}}
+                    <small ng-show="betaVersion">[Beta]</small>
+                </h1>
+            </div>
+            <div class="col-sm-5">
+                <h1>
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-success disabled">Current: Player {{currentPlayer + 1}}</button>
+                        <button type="button" class="btn btn-default" ng-click="resetGame()">Reset Game</button>
+                        <button type="button" class="btn btn-default" ng-click="initializeGame()">Edit Players / Board</button>
+                    </div>
+                </h1>
+            </div>
+
         </div>
         <div class="row full-height">
             <div class="panel panel-default full-height">
@@ -84,6 +96,8 @@
     <script src="js/jquery-1.11.0.min.js"></script>
     <!-- Angular -->
     <script src="js/angular.min.js"></script>
+    <!-- Other Functions -->
+    <script src="js/otherFunctions.js"></script>
     <!-- Controller -->
     <script src="js/gameController.js"></script>
     <!-- Bootstrap -->

@@ -14,13 +14,13 @@ body {
 }
 .game-table,
 .game-table td {
-    border: 1px solid;
+    border: 2px solid;
 }
 .move-cursor {
     cursor: pointer;
 }
 .main-container {
-    height: 85%;
+    height: 87%;
 }
 .full-height {
     height: 100%;
