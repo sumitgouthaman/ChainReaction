@@ -22,7 +22,8 @@ function gameController($scope) {
     */
     $scope.cellClicked = function (r, c) {
         //alert("Clicked: " + r + " - " + c);
-        $scope.matrix[r][c]++;
+        $scope.matrix[r][c].player = $scope.currentPlayer;
+        $scope.matrix[r][c].count++;
         changePlayer();
     }
     var changePlayer = function () {
@@ -32,10 +33,13 @@ function gameController($scope) {
     /*
     Called at the beginning to set up no of players
     */
-    $scope.resetGame = function(){
+    $scope.resetGame = function () {
         for (var i = 0; i < $scope.matrix.length; i++) {
             for (var j = 0; j < $scope.matrix[i].length; j++) {
-                $scope.matrix[i][j] = 0;
+                $scope.matrix[i][j] = {
+                    "player": null,
+                    "count": 0
+                };
             }
         }
     }
@@ -86,5 +90,44 @@ function gameController($scope) {
         for (var i = 0; i < $scope.matrix.length; i++) {
             $scope.matrix[i].push(0);
         }
+    }
+
+    /*
+    Functions realted to style of cell on the board
+    */
+    $scope.getBgColorCell = function (r, c) {
+        var playerID = $scope.matrix[r][c].player;
+        if (playerID == null) {
+            return {
+                "background-color": "#FFFFFF"
+            }
+        } else {
+            return {
+                "background-color": $scope.players[playerID]
+            }
+        }
+    }
+    $scope.getFontColorCell = function (r, c, asteriskNum) {
+        var playerID = $scope.matrix[r][c].player;
+        var cellCount = $scope.matrix[r][c].count;
+        var style = new Object();
+        if (playerID == null) {
+            style.color = "#FFFFFF";
+        } else {
+            style.color = $scope.players[playerID];
+        }
+        if (asteriskNum <= cellCount) {
+            style.visibility = "visible";
+        } else {
+            style.visibility = "hidden";
+        }
+        return style;
+    }
+
+    /*
+    Other functions
+    */
+    $scope.range = function (num) {
+        return new Array(num);
     }
 }

@@ -15,12 +15,12 @@
 <body ng-controller="gameController" ng-init="initializeGame()">
     <div class="container main-container">
         <div class="row">
-            <div class="col-sm-7">
+            <div class="col-sm-6 col-md-7">
                 <h1>{{appName}}
                     <small ng-show="betaVersion">[Beta]</small>
                 </h1>
             </div>
-            <div class="col-sm-5">
+            <div class="col-sm-6 col-md-5">
                 <h1>
                     <div class="btn-group pull-right">
                         <button type="button" class="btn btn-success disabled">Player {{currentPlayer + 1}}</button>
@@ -37,7 +37,11 @@
                     <table class="game-table" ng-style="getBoardBorderStyle(players, currentPlayer)">
                         <tbody>
                             <tr ng-repeat="row in matrix track by $index">
-                                <td ng-repeat="col in row track by $index" class="text-center" ng-style="getBoardBorderStyle(players, currentPlayer)" ng-click="cellClicked($parent.$index, $index)">{{col}}</td>
+                                <td ng-repeat="col in row track by $index" class="text-center move-cursor" ng-style="getBoardBorderStyle(players, currentPlayer)" ng-click="cellClicked($parent.$index, $index)">
+                                    <span class="glyphicon glyphicon-asterisk shake" ng-style="getFontColorCell($parent.$index, $index, 1)"></span>
+                                    <span class="glyphicon glyphicon-asterisk shake" ng-style="getFontColorCell($parent.$index, $index, 2)"></span>
+                                    <span class="glyphicon glyphicon-asterisk shake" ng-style="getFontColorCell($parent.$index, $index, 3)"></span>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
