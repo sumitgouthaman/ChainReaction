@@ -44,6 +44,7 @@ body {
     }
 }
 */
+
 @-webkit-keyframes wiggle {
     0% {
         -webkit-transform: rotate(0deg);
@@ -67,4 +68,18 @@ body {
     -webkit-transform-origin: 25% 75%;
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-timing-function: linear;
+}
+.shake-slow{
+    -webkit-animation-duration: 1.13s;
+}
+.shake-slower{
+    -webkit-animation-duration: 1.27s;
+}
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+    display: none !important;
 }
