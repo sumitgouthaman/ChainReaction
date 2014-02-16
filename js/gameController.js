@@ -1,6 +1,6 @@
 var chainreaction = angular.module('chainreaction', ['ngTouch']);
-chainreaction.controller('gameController', ['$scope',
-    function ($scope) {
+chainreaction.controller('gameController', ['$scope', '$timeout',
+    function ($scope, $timeout) {
         $scope.appName = "Chain Reaction";
         $scope.betaVersion = true;
         $scope.secondaryText = "By Sumit Gouthaman"
@@ -24,11 +24,39 @@ chainreaction.controller('gameController', ['$scope',
         /*
         Gameplay related functions
         */
+        $scope.toExpode = new Array();
         $scope.cellClicked = function (r, c) {
-            //alert("Clicked: " + r + " - " + c);
-            $scope.matrix[r][c].player = $scope.currentPlayer;
-            $scope.matrix[r][c].count = ($scope.matrix[r][c].count + 1) % (maxInCell(r, c) + 1);
-            changePlayer();
+            $scope.cellAttack(r, c, $scope.currentPlayer);
+            $timeout($scope.performExplosions, 100);
+        }
+        $scope.cellAttack = function (r, c, player) {
+            $scope.matrix[r][c].count = ($scope.matrix[r][c].count + 1);
+            if ($scope.matrix[r][c].count <= maxInCell(r, c)) {
+                $scope.matrix[r][c].player = player;
+            } else {
+                $scope.explode(r, c, player);
+                $scope.matrix[r][c].count = 0;
+                $scope.matrix[r][c].player = null;
+            }
+        }
+        $scope.explode = function (r, c, player) {
+            $scope.toExpode.push({
+                "r": r,
+                "c": c,
+                "player": player
+            });
+        }
+        $scope.performExplosions = function () {
+            if ($scope.toExpode.length == 0) {
+                changePlayer();
+            } else {
+                var cell = $scope.toExpode.pop(0, 1);
+                var neighbours = getNeighbours(cell.r, cell.c);
+                for (var n = 0; n < neighbours.length; n++) {
+                    $scope.cellAttack(neighbours[n].r, neighbours[n].c, cell.player);
+                }
+                $timeout($scope.performExplosions, 100);
+            }
         }
         var changePlayer = function () {
             $scope.currentPlayer = ($scope.currentPlayer + 1) % $scope.players.length;
@@ -41,6 +69,23 @@ chainreaction.controller('gameController', ['$scope',
                 return 2;
             }
             return 3;
+        }
+        var getNeighbours = function (r, c) {
+            var neighbours = new Array();
+            for (var i = -1; i <= 1; i++) {
+                for (var j = -1; j <= 1; j++) {
+                    if ((i * j != 0) || (i == 0 && j == 0)) {
+                        continue;
+                    }
+                    if (((r + i >= 0) && (r + i < $scope.rows)) && ((c + j >= 0) && (c + j < $scope.cols))) {
+                        neighbours.push({
+                            "r": r + i,
+                            "c": c + j
+                        });
+                    }
+                }
+            }
+            return neighbours;
         }
 
         /*
