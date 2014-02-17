@@ -71,7 +71,7 @@ chainreaction.controller('gameController', ['$scope', '$timeout',
                             }
                         }
                         if (!playerFoundElsewhere) {
-                            alert("Player " + (p + 1) + " lost");
+                            makePlayerLostToast("Player " + (p + 1));
                             $scope.players[p] = null;
                         }
                     }
@@ -94,7 +94,7 @@ chainreaction.controller('gameController', ['$scope', '$timeout',
             }
             $scope.currentPlayer = newPlayer;
             if (oldPlayer == newPlayer) {
-                alert("Player " + ($scope.currentPlayer + 1) + " won!");
+                makePlayerWonToast("Player " + ($scope.currentPlayer + 1));
                 $scope.initializeGame();
             }
         }
