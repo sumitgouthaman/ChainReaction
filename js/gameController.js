@@ -8,10 +8,6 @@ chainreaction.controller('gameController', ['$scope', '$timeout',
         //Intialize board for the game
         $scope.rows = 8;
         $scope.cols = 12;
-        $scope.matrix = new Array($scope.rows);
-        for (var i = 0; i < $scope.rows; i++) {
-            $scope.matrix[i] = new Array($scope.cols);
-        }
 
         //Array to hold colors for each player
         $scope.players = new Array();
@@ -129,7 +125,9 @@ chainreaction.controller('gameController', ['$scope', '$timeout',
         Called at the beginning to set up no of players
         */
         $scope.resetGame = function () {
+            $scope.matrix = new Array($scope.rows);
             for (var i = 0; i < $scope.rows; i++) {
+                $scope.matrix[i] = new Array($scope.cols);
                 for (var j = 0; j < $scope.cols; j++) {
                     $scope.matrix[i][j] = {
                         "player": null,
@@ -140,13 +138,21 @@ chainreaction.controller('gameController', ['$scope', '$timeout',
             $scope.currentPlayer = 0;
             $scope.setupOver = false;
             $scope.turns = 0;
+            if ($scope.players.length <= 2) {
+                $scope.players = new Array();
+                $scope.players.push(getRandomColor());
+                $scope.players.push(getRandomColor());
+            } else {
+                var noOfPlayers = $scope.players.length;
+                $scope.players = new Array();
+                for (var p = 0; p < noOfPlayers; p++) {
+                    $scope.players.push(getRandomColor());
+                }
+            }
         }
         $scope.initializeGame = function () {
-            $scope.players = new Array();
-            $scope.players.push(getRandomColor());
-            $scope.players.push(getRandomColor());
-            $('#noOfPlayersModal').modal({});
             $scope.resetGame();
+            $('#noOfPlayersModal').modal({});
         }
 
         /*
@@ -227,18 +233,6 @@ chainreaction.controller('gameController', ['$scope', '$timeout',
         /*
         Functions realted to style of cell on the board
         */
-        $scope.getBgColorCell = function (r, c) {
-            var playerID = $scope.matrix[r][c].player;
-            if (playerID == null) {
-                return {
-                    "background-color": "#FFFFFF"
-                }
-            } else {
-                return {
-                    "background-color": $scope.players[playerID]
-                }
-            }
-        }
         $scope.getFontColorCell = function (r, c, asteriskNum) {
             var playerID = $scope.matrix[r][c].player;
             var cellCount = $scope.matrix[r][c].count;

@@ -1,6 +1,6 @@
 Chain Reaction
 ==============
-An attempt to replicate the game "Chain Reaction" on Play Store as a Web Application for both desktop and mobile.  
+An attempt to replicate the game "[Chain Reaction](https://play.google.com/store/apps/details?id=com.BuddyMattEnt.ChainReaction)" on Play Store as a Web Application for both desktop and mobile.  
 Built using HTML5 and Angular.  
 
 ###Play the current build

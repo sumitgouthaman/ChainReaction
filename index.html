@@ -41,9 +41,9 @@
                         <tbody>
                             <tr ng-repeat="r in matrix track by $index">
                                 <td ng-repeat="c in r track by $index" class="text-center move-cursor" ng-style="getBoardBorderStyle(players, currentPlayer)" ng-click="cellClicked($parent.$index, $index)">
-                                    <span class="glyphicon glyphicon-asterisk shake" ng-style="getFontColorCell($parent.$index, $index, 1)"></span>
-                                    <span class="glyphicon glyphicon-asterisk shake shake-slow" ng-style="getFontColorCell($parent.$index, $index, 2)"></span>
-                                    <span class="glyphicon glyphicon-asterisk shake shake-slower" ng-style="getFontColorCell($parent.$index, $index, 3)"></span>
+                                    <span class="glyphicon glyphicon-certificate shake" ng-style="getFontColorCell($parent.$index, $index, 1)"></span>
+                                    <span class="glyphicon glyphicon-certificate shake shake-slow" ng-style="getFontColorCell($parent.$index, $index, 2)"></span>
+                                    <span class="glyphicon glyphicon-certificate shake shake-slower" ng-style="getFontColorCell($parent.$index, $index, 3)"></span>
                                 </td>
                             </tr>
                         </tbody>
