@@ -15,8 +15,6 @@ chainreaction.controller('gameController', ['$scope', '$timeout',
 
         //Array to hold colors for each player
         $scope.players = new Array();
-        $scope.players.push(getRandomColor());
-        $scope.players.push(getRandomColor());
 
         //Holds color of player who will play the current turn
         $scope.currentPlayer = 0;
@@ -24,8 +22,14 @@ chainreaction.controller('gameController', ['$scope', '$timeout',
         /*
         Gameplay related functions
         */
+        $scope.turns = 0;
+        $scope.setupOver = false;
         $scope.toExpode = new Array();
         $scope.cellClicked = function (r, c) {
+            $scope.turns++;
+            if ($scope.turns == $scope.players.length) {
+                $scope.setupOver = true;
+            }
             if ($scope.matrix[r][c].player != null) {
                 if ($scope.matrix[r][c].player != $scope.currentPlayer) {
                     return;
@@ -53,6 +57,25 @@ chainreaction.controller('gameController', ['$scope', '$timeout',
         }
         $scope.performExplosions = function () {
             if ($scope.toExpode.length == 0) {
+                if ($scope.setupOver) {
+                    for (var p = 0; p < $scope.players.length; p++) {
+                        if ($scope.players[p] == null) {
+                            continue;
+                        }
+                        var playerFoundElsewhere = false;
+                        for (var i = 0; i < $scope.rows; i++) {
+                            for (var j = 0; j < $scope.cols; j++) {
+                                if ($scope.matrix[i][j].player == p) {
+                                    playerFoundElsewhere = true;
+                                }
+                            }
+                        }
+                        if (!playerFoundElsewhere) {
+                            alert("Player " + (p + 1) + " lost");
+                            $scope.players[p] = null;
+                        }
+                    }
+                }
                 changePlayer();
             } else {
                 var cell = $scope.toExpode.pop(0, 1);
@@ -64,7 +87,16 @@ chainreaction.controller('gameController', ['$scope', '$timeout',
             }
         }
         var changePlayer = function () {
-            $scope.currentPlayer = ($scope.currentPlayer + 1) % $scope.players.length;
+            var oldPlayer = $scope.currentPlayer;
+            var newPlayer = ($scope.currentPlayer + 1) % $scope.players.length;
+            while ($scope.players[newPlayer] == null) {
+                newPlayer = (newPlayer + 1) % $scope.players.length;
+            }
+            $scope.currentPlayer = newPlayer;
+            if (oldPlayer == newPlayer) {
+                alert("Player " + ($scope.currentPlayer + 1) + " won!");
+                $scope.initializeGame();
+            }
         }
         var maxInCell = function (r, c) {
             if ((r == 0 && (c == 0 || c == $scope.cols - 1)) || (r == $scope.rows - 1 && (c == 0 || c == $scope.cols - 1))) {
@@ -105,8 +137,14 @@ chainreaction.controller('gameController', ['$scope', '$timeout',
                     };
                 }
             }
+            $scope.currentPlayer = 0;
+            $scope.setupOver = false;
+            $scope.turns = 0;
         }
         $scope.initializeGame = function () {
+            $scope.players = new Array();
+            $scope.players.push(getRandomColor());
+            $scope.players.push(getRandomColor());
             $('#noOfPlayersModal').modal({});
             $scope.resetGame();
         }
