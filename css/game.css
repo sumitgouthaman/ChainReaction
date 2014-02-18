@@ -30,26 +30,24 @@ body {
 .full-height {
     height: 100%;
 }
-/*
-@-webkit-keyframes wiggle {
+
+@keyframes wiggle {
     0% {
-        -webkit-transform: translate(0px, 0px);
+        transform: rotate(0deg);
     }
     25% {
-        -webkit-transform: translate(2px, 2px);
+        transform: rotate(90deg);
     }
     50% {
-        -webkit-transform: translate(0px, 4px);
+        transform: rotate(180deg);
     }
     75% {
-        -webkit-transform: translate(-2px, 2px);
+        transform: rotate(270deg);
     }
     100% {
-        -webkit-transform: translate(0px, 2px);
+        transform: rotate(360deg);
     }
 }
-*/
-
 @-webkit-keyframes wiggle {
     0% {
         -webkit-transform: rotate(0deg);
@@ -73,12 +71,19 @@ body {
     -webkit-transform-origin: 25% 75%;
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-timing-function: linear;
+    animation-name: wiggle;
+    animation-duration: 1s;
+    transform-origin: 25% 75%;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }
 .shake-slow {
     -webkit-animation-duration: 1.13s;
+    animation-duration: 1.13s;
 }
 .shake-slower {
     -webkit-animation-duration: 1.27s;
+    animation-duration: 1.27s;
 }
 [ng\:cloak],
 [ng-cloak],
