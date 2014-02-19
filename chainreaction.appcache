@@ -1,5 +1,5 @@
 CACHE MANIFEST
-#version 1.0, 19 February 2014
+#version 2.0, 19 February 2014
 
 CACHE:
 
@@ -27,7 +27,7 @@ images/favicon.png
 bootstrap/fonts/glyphicons-halflings-regular.woff
 bootstrap/fonts/glyphicons-halflings-regular.eot
 bootstrap/fonts/glyphicons-halflings-regular.svg
-bootstrap/fonts/glyphicons-halflings-regular.tff
+bootstrap/fonts/glyphicons-halflings-regular.ttf
 
 NETWORK:
 *
