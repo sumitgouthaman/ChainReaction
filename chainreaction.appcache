@@ -1,0 +1,33 @@
+CACHE MANIFEST
+#version 1.0, 19 February 2014
+
+CACHE:
+
+#html pages
+index.html
+
+#javascript files
+js/angular.min.js
+js/angular-touch.min.js
+js/gameController.js
+js/jquery-1.11.0.min.js
+js/otherFunctions.js
+js/toastr.js
+bootstrap/js/bootstrap.min.js
+
+#css files
+bootstrap/css/bootstrap.min.css
+css/game.css
+css/toastr.css
+
+#images
+images/favicon.png
+
+#other
+bootstrap/fonts/glyphicons-halflings-regular.woff
+bootstrap/fonts/glyphicons-halflings-regular.eot
+bootstrap/fonts/glyphicons-halflings-regular.svg
+bootstrap/fonts/glyphicons-halflings-regular.tff
+
+NETWORK:
+*
